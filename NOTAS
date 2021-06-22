@@ -11,3 +11,14 @@ https://www.youtube.com/watch?v=lp2_Pq3kOfY
 Canal de: DATACLOUDER
 Cómo subir una página/aplicación web a Firebase y configurar Dominio
 8 nov. 2020
+
+*************
+22jun2021
+*************
+
+Pendientes:
+1. Problema: Falta colocar titulos a cada Input Text
+
+2. Problema: Aunque los Input Text esten vacios y se presione btn GUARDAR, los campos vacios son almacenados como un Nuevo Dato
+
+3. Problema: Cuando se agregan los Nuevos Datos, estos se cargan en pantalla de forma DESORDENADA
