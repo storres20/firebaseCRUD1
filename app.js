@@ -42,11 +42,12 @@ Despues:
 db.collection("users").onSnapshot((querySnapshot)...
 */
 db.collection("users").onSnapshot((querySnapshot) => {
+    var i=1; //inicializamos i, para mostrar en Tabla numeros correlativos
     tabla.innerHTML = '';
     querySnapshot.forEach((doc) => {
         console.log(`${doc.id} => ${doc.data().first}`); //Los Backticks nos permite concatenar las variables ${} dentro de los parentesis del Console.log
         tabla.innerHTML += `<tr>
-        <th scope="row">${doc.id}</th>
+        <th scope="row">${i++}</th>
         <td>${doc.data().first}</td>
         <td>${doc.data().last}</td>
         <td>${doc.data().born}</td>
@@ -55,6 +56,7 @@ db.collection("users").onSnapshot((querySnapshot) => {
       </tr>`
       //Nota btn ELIMINAR: 1. se agrega onclick para que accione la funcion eliminar al recibir un click. 2. se coloca entre '' la variable ${doc.id}, para que este valor unico de cada item viaje a la funcion eliminar al recibir el click
       //!Nota btn EDITAR: similar al btn ELIMINAR; sin embargo, aprovechamos el boton editar para enviar los valores del id, nombre (first), apellido(last) y fecha(born)
+      //Nota: se cambia ${doc.id} por ${i++} para mostrar en tabla numeros correlativos en la columna ID
     });
 });
 //*Leer Datos, desde DB Firebase
