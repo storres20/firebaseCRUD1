@@ -1,5 +1,8 @@
+//*Inicializamos Cloud Firestore
 var db = firebase.firestore();
+//*Inicializamos Cloud Firestore
 
+//*****************************************
 
 //*Agregar el Usuario, cada vez que se da CLICK al boton GUARDAR
 function guardar(){
@@ -48,21 +51,22 @@ db.collection("users").onSnapshot((querySnapshot) => {
         <td>${doc.data().last}</td>
         <td>${doc.data().born}</td>
         <td><button class="btn btn-danger" onclick="eliminar('${doc.id}')">Eliminar</button></td>
-        <td><button class="btn btn-warning">Editar</button></td>
+        <td><button class="btn btn-warning" onclick="editar('${doc.id}','${doc.data().first}','${doc.data().last}','${doc.data().born}')">Editar</button></td>
       </tr>`
       //Nota btn ELIMINAR: 1. se agrega onclick para que accione la funcion eliminar al recibir un click. 2. se coloca entre '' la variable ${doc.id}, para que este valor unico de cada item viaje a la funcion eliminar al recibir el click
+      //!Nota btn EDITAR: similar al btn ELIMINAR; sin embargo, aprovechamos el boton editar para enviar los valores del id, nombre (first), apellido(last) y fecha(born)
     });
 });
 //*Leer Datos, desde DB Firebase
 
 //*****************************************
 
-//*Borrar Datos, en la Tablay en DB Firebase
+//*Borrar Datos, en la Tabla y en DB Firebase
 //Nota: 1. se cambia "cities" por "users"; ya que USERS es el nombre de la COLECCION de datos en Firebase. 2. en donde dice "DC" ahi va un ID. Para este caso se pone -> id
 /*Antes:
 db.collection("cities").doc("DC").delete()...
 Despues:
-db.collection("users").doc("").delete()...
+db.collection("users").doc("id").delete()...
 */
 function eliminar(id){
     db.collection("users").doc(id).delete().then(() => {
@@ -72,4 +76,67 @@ function eliminar(id){
     });
 }
 
-//*Borrar Datos, en la Tablay en DB Firebase
+//*Borrar Datos, en la Tabla y en DB Firebase
+
+//*****************************************
+
+//*Editar Datos, en la Tabla y en DB Firebase
+//Nota: Adaptamos el codigo de ACTUALIZAR DATOS de Firebase al codigo de nuestra TABLA
+/*Nota 1:
+Antes:
+capital: true
+Despues:
+    first: nombre,
+    last: apellido,
+    born: fecha
+*/
+//Nota 2: cambiamos "cities" por "users"
+
+
+function editar(id,nombre,apellido,fecha){
+    //Al presionar este boton EDITAR se quiere que los INPUT TEXTS se llenen con los datos del item a editar
+    //A esta funcion traemos los valores de nombre, apellido y fecha del item a editar, aprovechando el llamado de la funcion
+    document.getElementById('nombre').value = nombre;
+    document.getElementById('apellido').value = apellido;
+    document.getElementById('fecha').value = fecha;
+
+    //Para cambiar el nombre del boton GUARDAR a EDITAR durante la Edicion del dato
+    var boton = document.getElementById('boton');
+    boton.innerHTML = `Editar`;
+
+    //Una vez cambiado el nombre del boton se asigna una funcion si es que se da CLICK. Esta funcion enviara los datos modificados al Firebase
+
+    boton.onclick = function(){
+
+        var washingtonRef = db.collection("users").doc(id);
+
+        // Set the "capital" field of the city 'DC'
+
+        //Se actualiza las variables debido a que el USUARIO a modificado los valores originales
+        var nombre = document.getElementById('nombre').value;
+        var apellido = document.getElementById('apellido').value;
+        var fecha = document.getElementById('fecha').value;
+
+        //Se envia los valores modificados a FIREBASE
+        return washingtonRef.update({
+            first: nombre,
+            last: apellido,
+            born: fecha
+        })
+        .then(() => {
+            console.log("Document successfully updated!");
+            boton.innerHTML = `Guardar`;
+            //Estas 03 lineas de codigo limpian los valores de los INPUT TEXTS luego de presionar el boton GUARDAR
+            document.getElementById('nombre').value = '';
+            document.getElementById('apellido').value = '';
+            document.getElementById('fecha').value = '';
+        })
+        .catch((error) => {
+            // The document probably doesn't exist.
+            console.error("Error updating document: ", error);
+        });
+    };
+};
+
+
+//*Editar Datos, en la Tabla y en DB Firebase
