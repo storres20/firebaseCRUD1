@@ -47,7 +47,29 @@ db.collection("users").onSnapshot((querySnapshot) => {
         <td>${doc.data().first}</td>
         <td>${doc.data().last}</td>
         <td>${doc.data().born}</td>
+        <td><button class="btn btn-danger" onclick="eliminar('${doc.id}')">Eliminar</button></td>
+        <td><button class="btn btn-warning">Editar</button></td>
       </tr>`
+      //Nota btn ELIMINAR: 1. se agrega onclick para que accione la funcion eliminar al recibir un click. 2. se coloca entre '' la variable ${doc.id}, para que este valor unico de cada item viaje a la funcion eliminar al recibir el click
     });
 });
 //*Leer Datos, desde DB Firebase
+
+//*****************************************
+
+//*Borrar Datos, en la Tablay en DB Firebase
+//Nota: 1. se cambia "cities" por "users"; ya que USERS es el nombre de la COLECCION de datos en Firebase. 2. en donde dice "DC" ahi va un ID. Para este caso se pone -> id
+/*Antes:
+db.collection("cities").doc("DC").delete()...
+Despues:
+db.collection("users").doc("").delete()...
+*/
+function eliminar(id){
+    db.collection("users").doc(id).delete().then(() => {
+        console.log("Document successfully deleted!");
+    }).catch((error) => {
+        console.error("Error removing document: ", error);
+    });
+}
+
+//*Borrar Datos, en la Tablay en DB Firebase
