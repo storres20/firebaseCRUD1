@@ -15,6 +15,10 @@ function guardar(){
     })
     .then((docRef) => {
         console.log("Document written with ID: ", docRef.id);
+        //Estas 03 lineas de codigo limpian los valores de los INPUT TEXTS luego de presionar el boton GUARDAR
+        document.getElementById('nombre').value = '';
+        document.getElementById('apellido').value = '';
+        document.getElementById('fecha').value = '';
     })
     .catch((error) => {
         console.error("Error adding document: ", error);
