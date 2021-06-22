@@ -18,7 +18,14 @@ Cómo subir una página/aplicación web a Firebase y configurar Dominio
 
 Pendientes:
 1. Problema: Falta colocar titulos a cada Input Text
+Atendido OK!!
 
 2. Problema: Aunque los Input Text esten vacios y se presione btn GUARDAR, los campos vacios son almacenados como un Nuevo Dato
 
 3. Problema: Cuando se agregan los Nuevos Datos, estos se cargan en pantalla de forma DESORDENADA
+
+
+Contribucion:
+1. Se ha agregado Sweet Alert 2
+2. Se muestra mensaje al intentar GUARDAR datos incompletos
+3. Se muestra mensaje de exito al GUARDAR datos

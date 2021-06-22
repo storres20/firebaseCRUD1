@@ -11,21 +11,46 @@ function guardar(){
     var apellido = document.getElementById('apellido').value;
     var fecha = document.getElementById('fecha').value;
 
-    db.collection("users").add({
-        first: nombre, //var nombre = document...
-        last: apellido, //var apellido = document...
-        born: fecha //var fecha = document...
-    })
-    .then((docRef) => {
-        console.log("Document written with ID: ", docRef.id);
-        //Estas 03 lineas de codigo limpian los valores de los INPUT TEXTS luego de presionar el boton GUARDAR
-        document.getElementById('nombre').value = '';
-        document.getElementById('apellido').value = '';
-        document.getElementById('fecha').value = '';
-    })
-    .catch((error) => {
-        console.error("Error adding document: ", error);
-    });
+    //Agregamos IF-ELSE. IF para que ejecute el codigo si todos los Input text estan llenos. ELSE para mostrar mensaje 
+    if ((nombre !== "") && (apellido !== "") && (fecha !== "")) {
+
+        db.collection("users").add({
+            first: nombre, //var nombre = document...
+            last: apellido, //var apellido = document...
+            born: fecha //var fecha = document...
+        })
+        .then((docRef) => {
+            console.log("Document written with ID: ", docRef.id);
+            //Estas 03 lineas de codigo limpian los valores de los INPUT TEXTS luego de presionar el boton GUARDAR
+            document.getElementById('nombre').value = '';
+            document.getElementById('apellido').value = '';
+            document.getElementById('fecha').value = '';
+
+            //Mensaje de EXITO por el llenado de los datos
+            Swal.fire({
+                position: 'top-end',
+                icon: 'success',
+                title: 'Se ha grabado con EXITO',
+                showConfirmButton: false,
+                timer: 1500
+              })
+        })
+        .catch((error) => {
+            console.error("Error adding document: ", error);
+        });
+
+    } else {
+
+        Swal.fire({
+            position: 'top-end',
+            icon: 'info',
+            title: 'Falta llenar todos DATOS',
+            showConfirmButton: false,
+            timer: 1500
+          })
+
+    }
+
 }
 //*Agregar el Usuario, cada vez que se da CLICK al boton GUARDAR
 
