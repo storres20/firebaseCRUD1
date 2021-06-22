@@ -25,3 +25,23 @@ function guardar(){
     });
 }
 //*Agregar el Usuario, cada vez que se da CLICK al boton GUARDAR
+
+//*****************************************
+
+//*Leer Datos, desde DB Firebase
+//Nota: "tabla" es el ID de <tbody></tbody> en la tabla de Bootstrap del index.html. Se apunta a esta tabla con JS para llenarlo con los valores del Firebase
+var tabla = document.getElementById('tabla');
+//Nota: 1. La variable DOC nos trae todos los documentos de USERS (Toda la coleccion de Firebase)
+db.collection("users").get().then((querySnapshot) => {
+    tabla.innerHTML = '';
+    querySnapshot.forEach((doc) => {
+        console.log(`${doc.id} => ${doc.data().first}`); //Los Backticks nos permite concatenar las variables ${} dentro de los parentesis del Console.log
+        tabla.innerHTML += `<tr>
+        <th scope="row">${doc.id}</th>
+        <td>${doc.data().first}</td>
+        <td>${doc.data().last}</td>
+        <td>${doc.data().born}</td>
+      </tr>`
+    });
+});
+//*Leer Datos, desde DB Firebase
