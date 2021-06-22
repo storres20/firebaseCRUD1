@@ -40,7 +40,7 @@ function guardar(){
         });
 
     } else {
-
+        //Mensaje ERROR en caso existan Datos incompletos
         Swal.fire({
             position: 'top-end',
             icon: 'info',
@@ -96,11 +96,46 @@ Despues:
 db.collection("users").doc("id").delete()...
 */
 function eliminar(id){
-    db.collection("users").doc(id).delete().then(() => {
-        console.log("Document successfully deleted!");
-    }).catch((error) => {
-        console.error("Error removing document: ", error);
-    });
+
+    //Mensaje CONFIRMAR antes de Eliminar
+
+    Swal.fire({
+        title: 'Esta seguro de ELIMINAR?',
+        text: "!!!!!!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Sì, eliminar',
+        cancelButtonText: 'No, Cancelar'
+      }).then((result) => {
+        if (result.isConfirmed) {
+
+            //****************************************************
+            db.collection("users").doc(id).delete().then(() => {
+                console.log("Document successfully deleted!");
+            }).catch((error) => {
+                console.error("Error removing document: ", error);
+            });
+            //****************************************************
+
+            /*Swal.fire(
+            'Eliminado!',
+            'Su DATO fue eliminado!',
+            'success'
+          )*/
+            //Mensaje final con TEMPORIZADOR
+            Swal.fire({
+                //position: 'top-end',
+                icon: 'success',
+                title: 'Eliminado!',
+                showConfirmButton: false,
+                timer: 1500
+            })
+
+        }
+      })
+
 }
 
 //*Borrar Datos, en la Tabla y en DB Firebase
