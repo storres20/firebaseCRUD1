@@ -2,7 +2,7 @@
 var db = firebase.firestore();
 //*Inicializamos Cloud Firestore
 
-//*****************************************
+//?2*****************************************
 
 //*Agregar el Usuario, cada vez que se da CLICK al boton GUARDAR
 function guardar(){
@@ -54,7 +54,7 @@ function guardar(){
 }
 //*Agregar el Usuario, cada vez que se da CLICK al boton GUARDAR
 
-//*****************************************
+//?2*****************************************
 
 //*Leer Datos, desde DB Firebase
 //Nota: "tabla" es el ID de <tbody></tbody> en la tabla de Bootstrap del index.html. Se apunta a esta tabla con JS para llenarlo con los valores del Firebase
@@ -86,7 +86,7 @@ db.collection("users").onSnapshot((querySnapshot) => {
 });
 //*Leer Datos, desde DB Firebase
 
-//*****************************************
+//?2*****************************************
 
 //*Borrar Datos, en la Tabla y en DB Firebase
 //Nota: 1. se cambia "cities" por "users"; ya que USERS es el nombre de la COLECCION de datos en Firebase. 2. en donde dice "DC" ahi va un ID. Para este caso se pone -> id
@@ -140,7 +140,7 @@ function eliminar(id){
 
 //*Borrar Datos, en la Tabla y en DB Firebase
 
-//*****************************************
+//?2*****************************************
 
 //*Editar Datos, en la Tabla y en DB Firebase
 //Nota: Adaptamos el codigo de ACTUALIZAR DATOS de Firebase al codigo de nuestra TABLA
@@ -175,28 +175,45 @@ function editar(id,nombre,apellido,fecha){
         // Set the "capital" field of the city 'DC'
 
         //Se actualiza las variables debido a que el USUARIO a modificado los valores originales
-        var nombre = document.getElementById('nombre').value;
-        var apellido = document.getElementById('apellido').value;
-        var fecha = document.getElementById('fecha').value;
+        var nombre2 = document.getElementById('nombre').value;
+        var apellido2 = document.getElementById('apellido').value;
+        var fecha2 = document.getElementById('fecha').value;
 
-        //Se envia los valores modificados a FIREBASE
-        return washingtonRef.update({
-            first: nombre,
-            last: apellido,
-            born: fecha
-        })
-        .then(() => {
-            console.log("Document successfully updated!");
+        if ((nombre==nombre2)&&(apellido==apellido2)&&(fecha==fecha2)) {
+            
+            console.log("NO SE MODIFICO NADA!");
             boton.innerHTML = `Guardar`;
             //Estas 03 lineas de codigo limpian los valores de los INPUT TEXTS luego de presionar el boton GUARDAR
             document.getElementById('nombre').value = '';
             document.getElementById('apellido').value = '';
             document.getElementById('fecha').value = '';
-        })
-        .catch((error) => {
-            // The document probably doesn't exist.
-            console.error("Error updating document: ", error);
-        });
+            window.event.stopPropagation();
+            return false;
+
+        } else {
+
+            //Se envia los valores modificados a FIREBASE
+            return washingtonRef.update({
+                first: nombre2,
+                last: apellido2,
+                born: fecha2
+            })
+            .then(() => {
+                console.log("Document successfully updated!");
+                boton.innerHTML = `Guardar`;
+                //Estas 03 lineas de codigo limpian los valores de los INPUT TEXTS luego de presionar el boton GUARDAR
+                document.getElementById('nombre').value = '';
+                document.getElementById('apellido').value = '';
+                document.getElementById('fecha').value = '';
+                
+
+            })
+            .catch((error) => {
+                // The document probably doesn't exist.
+                console.error("Error updating document: ", error);
+            });
+
+        }
     };
 };
 
