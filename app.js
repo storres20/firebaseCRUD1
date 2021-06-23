@@ -44,7 +44,7 @@ function guardar(){
         Swal.fire({
             position: 'top-end',
             icon: 'info',
-            title: 'Falta llenar todos DATOS',
+            title: 'Falta llenar DATOS',
             showConfirmButton: false,
             timer: 1500
           })
@@ -166,10 +166,16 @@ function editar(id,nombre,apellido,fecha){
     var boton = document.getElementById('boton');
     boton.innerHTML = `Editar`;
 
+    let contbtn = 1; // indicador de que se ingreso a la 1ra parte
+
     //Una vez cambiado el nombre del boton se asigna una funcion si es que se da CLICK. Esta funcion enviara los datos modificados al Firebase
 
     boton.onclick = function(){
 
+        if (contbtn == 0) {
+            guardar();
+        }
+        else{
         var washingtonRef = db.collection("users").doc(id);
 
         // Set the "capital" field of the city 'DC'
@@ -179,16 +185,16 @@ function editar(id,nombre,apellido,fecha){
         var apellido2 = document.getElementById('apellido').value;
         var fecha2 = document.getElementById('fecha').value;
 
+        contbtn = 0; // ya que el btn toma el nombre GUARDAR, se indica a contbtn=0 para que al presionar el boton se cargue la funcion GUARDAR
+
         if ((nombre==nombre2)&&(apellido==apellido2)&&(fecha==fecha2)) {
-            
+
             console.log("NO SE MODIFICO NADA!");
             boton.innerHTML = `Guardar`;
             //Estas 03 lineas de codigo limpian los valores de los INPUT TEXTS luego de presionar el boton GUARDAR
             document.getElementById('nombre').value = '';
             document.getElementById('apellido').value = '';
             document.getElementById('fecha').value = '';
-            window.event.stopPropagation();
-            return false;
 
         } else {
 
@@ -205,14 +211,12 @@ function editar(id,nombre,apellido,fecha){
                 document.getElementById('nombre').value = '';
                 document.getElementById('apellido').value = '';
                 document.getElementById('fecha').value = '';
-                
-
             })
             .catch((error) => {
                 // The document probably doesn't exist.
                 console.error("Error updating document: ", error);
             });
-
+        }
         }
     };
 };
