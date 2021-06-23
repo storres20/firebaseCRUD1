@@ -28,7 +28,7 @@ function guardar(){
 
             //Mensaje de EXITO por el llenado de los datos
             Swal.fire({
-                position: 'top-end',
+                position: 'top',
                 icon: 'success',
                 title: 'Se ha grabado con EXITO',
                 showConfirmButton: false,
@@ -42,15 +42,13 @@ function guardar(){
     } else {
         //Mensaje ERROR en caso existan Datos incompletos
         Swal.fire({
-            position: 'top-end',
+            position: 'top',
             icon: 'info',
             title: 'Falta llenar DATOS',
             showConfirmButton: false,
             timer: 1500
           })
-
     }
-
 }
 //*Agregar el Usuario, cada vez que se da CLICK al boton GUARDAR
 
@@ -132,10 +130,8 @@ function eliminar(id){
                 showConfirmButton: false,
                 timer: 1500
             })
-
         }
       })
-
 }
 
 //*Borrar Datos, en la Tabla y en DB Firebase
@@ -196,6 +192,14 @@ function editar(id,nombre,apellido,fecha){
             document.getElementById('apellido').value = '';
             document.getElementById('fecha').value = '';
 
+            Swal.fire({
+                position: 'center',
+                icon: 'info',
+                title: 'No hubo cambios!',
+                showConfirmButton: false,
+                timer: 1500
+            })
+
         } else {
 
             //Se envia los valores modificados a FIREBASE
@@ -211,6 +215,14 @@ function editar(id,nombre,apellido,fecha){
                 document.getElementById('nombre').value = '';
                 document.getElementById('apellido').value = '';
                 document.getElementById('fecha').value = '';
+
+                Swal.fire({
+                    position: 'center',
+                    icon: 'success',
+                    title: 'Datos Actualizados!',
+                    showConfirmButton: false,
+                    timer: 1500
+                  })
             })
             .catch((error) => {
                 // The document probably doesn't exist.
