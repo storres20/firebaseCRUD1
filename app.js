@@ -4,6 +4,16 @@ var db = firebase.firestore();
 
 //?2*****************************************
 
+//*Inicializamos DataTable
+
+var dataSet = new Array();
+
+
+
+//*Inicializamos DataTable
+
+//?2*****************************************
+
 //*Agregar el Usuario, cada vez que se da CLICK al boton GUARDAR
 function guardar(){
     //Capturamos el valor de los elementos que tienen ID nombre, apellido y fecha; en otras palabras, capturamos los valores de los INPUT TEXT y lo asignamos a las variables nombre, apellido, fecha
@@ -64,11 +74,18 @@ db.collection("users").get().then((querySnapshot)...
 Despues:
 db.collection("users").onSnapshot((querySnapshot)...
 */
+
+
+
 db.collection("users").onSnapshot((querySnapshot) => {
     var i=1; //inicializamos i, para mostrar en Tabla numeros correlativos
     tabla.innerHTML = '';
+    
+    dataSet = [];
+
     querySnapshot.forEach((doc) => {
         console.log(`${doc.id} => ${doc.data().first}`); //Los Backticks nos permite concatenar las variables ${} dentro de los parentesis del Console.log
+        
         tabla.innerHTML += `<tr>
         <th scope="row">${i++}</th>
         <td>${doc.data().first}</td>
@@ -80,7 +97,35 @@ db.collection("users").onSnapshot((querySnapshot) => {
       //Nota btn ELIMINAR: 1. se agrega onclick para que accione la funcion eliminar al recibir un click. 2. se coloca entre '' la variable ${doc.id}, para que este valor unico de cada item viaje a la funcion eliminar al recibir el click
       //!Nota btn EDITAR: similar al btn ELIMINAR; sin embargo, aprovechamos el boton editar para enviar los valores del id, nombre (first), apellido(last) y fecha(born)
       //Nota: se cambia ${doc.id} por ${i++} para mostrar en tabla numeros correlativos en la columna ID
+
+        //?El codigo de arriba carga los datos provenientes del Firestore. El codigo de abajo guardar los datos en "dataSet"
+        --i;
+        dataSet.push([
+            i++, doc.data().first, doc.data().last, doc.data().born,i,i
+        ]);
+
     });
+
+
+    var tableId = '#table_id';
+    var tableObj = $(tableId).DataTable();
+
+    // clear first
+    if(tableObj!=null){
+    tableObj.clear();
+    tableObj.destroy();
+    }
+
+    //Lleno la DataTable
+    $(document).ready( function () {
+        $('#table_id').DataTable({
+            pageLength : 5,
+            lengthMenu: [[5, 10, 20, -1], [5, 10, 20, 'Todos']],
+            data: dataSet
+            
+        });
+    } );
+
 });
 //*Leer Datos, desde DB Firebase
 

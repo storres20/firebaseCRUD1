@@ -9,6 +9,14 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
     <!--* Bootstrap CSS -->
 
+    <!--* DataTable / Bootstrap 5 CSS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/dataTables.bootstrap5.min.css">
+    <!--* DataTable / Bootstrap 5 CSS -->
+
+    <!--* DataTable CSS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css">
+    <!--* DataTable CSS -->
+
     <title>Hello, world!</title>
   </head>
   <body>
@@ -42,6 +50,25 @@
         </tbody>
       </table>
       <!--* Bootstrap 5 - Table -->
+
+      <!--* DataTable Bootstrap 5 - Table -->
+      <table id="table_id" class="table table-striped table-bordered" style="width:100%">
+        <thead class="text-center">
+            <tr>
+                <th>Nº</th>
+                <th>Nombre</th>
+                <th>Apellido</th>
+                <th>Año Nac.</th>
+                <th>Eliminar</th>
+                <th>Editar</th>
+            </tr>
+        </thead>
+        <tbody>
+          <!-- Aqui!! La tabla se llenara con valores provenientes del Firebase -->
+        </tbody>
+    </table>
+
+    <!--* DataTable Bootstrap 5 - Table -->
 
     </div>
 
@@ -79,14 +106,25 @@
     </script>
     <!--* SDK Firebase -->
 
+    <!--* Sweet Alert 2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10/dist/sweetalert2.all.min.js"></script>
+    <!--* Sweet Alert 2 -->
+
+    <!--* JQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <!--* JQuery -->
+
+    <!--* DataTable Jquery -->
+    <script src="https://cdn.datatables.net/1.10.25/js/jquery.dataTables.min.js"></script>
+    <!--* DataTable Jquery -->
+
+    <!--* DataTable Bootstrap 5 Javascript -->
+    <script src="https://cdn.datatables.net/1.10.25/js/dataTables.bootstrap5.min.js"></script>
+    <!--* DataTable Bootstrap 5 Javascript -->
 
     <!--* Javascript file -->
     <script src="app.js"></script>
     <!--* Javascript file -->
-
-    <!--* Sweet Alert 2 -->
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10/dist/sweetalert2.all.min.js"></script>
-    <!--* Sweet Alert 2 -->
 
 <!--TODO: SCRIPT SECTION -->
 
