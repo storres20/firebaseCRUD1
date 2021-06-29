@@ -69,48 +69,6 @@ function guardar(){
 }
 //*Agregar el Usuario, cada vez que se da CLICK al boton GUARDAR - end
 
-//*Agregar el Usuario, cada vez que se da CLICK al boton GUARDAR - start
-function guardar2(){
-    //Capturamos el valor de los elementos que tienen ID nombre, apellido y fecha; en otras palabras, capturamos los valores de los INPUT TEXT y lo asignamos a las variables nombre, apellido, fecha
-    var nombre2 = document.getElementById('nombre2').value;
-    var apellido2 = document.getElementById('apellido2').value;
-    var fecha2 = document.getElementById('fecha2').value;
-
-    //Agregamos IF-ELSE. IF para que ejecute el codigo si todos los Input text estan llenos. ELSE para mostrar mensaje 
-    if ((nombre2 !== "") && (apellido2 !== "") && (fecha2 !== "")) {
-
-        db.collection("users").add({
-            first: nombre2, //var nombre = document...
-            last: apellido2, //var apellido = document...
-            born: fecha2 //var fecha = document...
-        })
-        .then((docRef) => {
-            console.log("Document written with ID: ", docRef.id);
-            //Estas 03 lineas de codigo limpian los valores de los INPUT TEXTS luego de presionar el boton GUARDAR
-            document.getElementById('nombre2').value = '';
-            document.getElementById('apellido2').value = '';
-            document.getElementById('fecha2').value = '';
-
-            //Mensaje de EXITO por el llenado de los datos
-            Swal.fire({
-                position: 'top',
-                icon: 'success',
-                title: 'Se ha grabado con EXITO',
-                showConfirmButton: false,
-                timer: 1500
-              })
-        })
-        .catch((error) => {
-            console.error("Error adding document: ", error);
-        });
-
-    } else {
-        return;
-    }
-}
-//*Agregar el Usuario, cada vez que se da CLICK al boton GUARDAR - end
-
-
 //?2*****************************************
 
 //*Leer Datos, desde DB Firebase - start
@@ -225,6 +183,14 @@ db.collection("users").onSnapshot((querySnapshot) => {
             document.getElementById('apellido2').value = '';
             document.getElementById('fecha2').value = '';
             $("#modalCRUD").modal("hide"); //esconde el MODAL
+            //Mensaje de EXITO por el llenado de los datos
+            Swal.fire({
+                position: 'top',
+                icon: 'success',
+                title: 'Se ha grabado con EXITO',
+                showConfirmButton: false,
+                timer: 1500
+              });
             return;
         });
         //*formMenu - DataTable - end
