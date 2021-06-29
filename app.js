@@ -167,7 +167,9 @@ db.collection("users").onSnapshot((querySnapshot) => {
             opcion = 1; //Nuevo
         });
         //*btnNuevo - DataTable - end
+
         //? ***************************
+
         //*formMenu - DataTable - start
         //Los valores de los INPUT TEXT los grabo en variables para enviarles al Firebase
         $("#formMenu").submit(function(e){
@@ -177,8 +179,8 @@ db.collection("users").onSnapshot((querySnapshot) => {
                 case 1: var nombre2 = document.getElementById('nombre2').value;
                         var apellido2 = document.getElementById('apellido2').value;
                         var fecha2 = document.getElementById('fecha2').value;
-            
-                        //Agregamos IF-ELSE. IF para que ejecute el codigo si todos los Input text estan llenos. ELSE para mostrar mensaje 
+
+                        //Agregamos IF-ELSE. IF para que ejecute el codigo si todos los Input text estan llenos. ELSE para mostrar mensaje
                         if ((nombre2 !== "") && (apellido2 !== "") && (fecha2 !== "")) {
                             db.collection("users").add({
                                 first: nombre2, //var nombre = document...
@@ -186,13 +188,16 @@ db.collection("users").onSnapshot((querySnapshot) => {
                                 born: fecha2 //var fecha = document...
                             });
                         }
+
                         document.getElementById('nombre2').value = '';
                         document.getElementById('apellido2').value = '';
                         document.getElementById('fecha2').value = '';
+
                         $("#modalCRUD").modal("hide"); //esconde el MODAL
+
                         //Mensaje de EXITO por el llenado de los datos - start
                         Swal.fire({
-                            position: 'top',
+                            position: 'center',
                             icon: 'success',
                             title: 'Se ha grabado con EXITO',
                             showConfirmButton: false,
@@ -201,8 +206,62 @@ db.collection("users").onSnapshot((querySnapshot) => {
                         //Mensaje de EXITO por el llenado de los datos - end
                         //return;
                         break;
-                
-                case 2: alert("btnEditar");
+
+                case 2:
+                        let data3 = [];
+                        var nombre3 = document.getElementById('nombre2').value;
+                        var apellido3 = document.getElementById('apellido2').value;
+                        var fecha3 = document.getElementById('fecha2').value;
+
+                        data3 = [nombre3,apellido3,fecha3];
+
+                        if ((data2[1]==nombre3)&&(data2[2]==apellido3)&&(data2[3]==fecha3)) {
+
+                            //Estas 03 lineas de codigo limpian los valores de los INPUT TEXTS luego de presionar el boton GUARDAR
+                            document.getElementById('nombre2').value = '';
+                            document.getElementById('apellido2').value = '';
+                            document.getElementById('fecha2').value = '';
+
+                            $("#modalCRUD").modal("hide"); //esconde el MODAL
+
+                            Swal.fire({
+                                position: 'center',
+                                icon: 'info',
+                                title: 'No hubo cambios!',
+                                showConfirmButton: false,
+                                timer: 1500
+                            });
+                            break;
+                        }
+
+                        if ((nombre3 !== "")&&(apellido3 !== "")&&(fecha3 !== "")) {
+
+                            var washingtonRef = db.collection("users").doc(data2[0]);
+
+                            //Estas 03 lineas de codigo limpian los valores de los INPUT TEXTS luego de presionar el boton GUARDAR
+                                document.getElementById('nombre2').value = '';
+                                document.getElementById('apellido2').value = '';
+                                document.getElementById('fecha2').value = '';
+
+                                $("#modalCRUD").modal("hide"); //esconde el MODAL
+
+                                Swal.fire({
+                                    position: 'center',
+                                    icon: 'success',
+                                    title: 'Datos Actualizados!',
+                                    showConfirmButton: false,
+                                    timer: 1500
+                                });
+
+                            //Se envia los valores modificados a FIREBASE
+                            return washingtonRef.update({
+                                first: data3[0], //nombre3
+                                last: data3[1], //apellido3
+                                born: data3[2] //fecha3
+                            });
+
+                        }
+
                         break;
 
                 case 3: alert("btnBorrar");
@@ -238,21 +297,35 @@ db.collection("users").onSnapshot((querySnapshot) => {
 
         //*btnEditar - start
         $(document).on("click",".btnEditar", function(){
+
+            data2 = []; //array para estos datos (id,nombre,apellido,fecha)
+
+            //*capturo los valores de la fila del DataTable - start
             fila = $(this).closest("tr");
             //ID = fila.find('td:eq(0)').text();
-            nombre2 = fila.find('td:eq(0)').text();
-            apellido2 = fila.find('td:eq(1)').text();
-            fecha2 = fila.find('td:eq(2)').text();
+            var fila2 = tableId.row( fila ).data(); //contiene todos los datos incluido el OCULTO
+            var id2 = fila2[0]; //valor de ID
+            console.log(id2);
 
+            var nombre2 = fila.find('td:eq(0)').text();
+            var apellido2 = fila.find('td:eq(1)').text();
+            var fecha2 = fila.find('td:eq(2)').text();
+            //*capturo los valores de la fila del DataTable - stop
+
+            data2 = [id2,nombre2,apellido2,fecha2];
+
+            //*Muestro los valores capturados en el formulario Modal - start
             $("#nombre2").val(nombre2);
             $("#apellido2").val(apellido2);
             $("#fecha2").val(fecha2);
+            //*Muestro los valores capturados en el formulario Modal - stop
 
             $(".modal-header").css("background-color", "#f0ad4e");
             $(".modal-header").css("color","white");
             $(".modal-title").text("Menu - Editar");
             $("#modalCRUD").modal("show"); //muestra el MODAL
             opcion = 2; //Editar
+
         });
 
         //*btnEditar - end
@@ -265,9 +338,9 @@ db.collection("users").onSnapshot((querySnapshot) => {
             //ID = fila.find('td:eq(0)').text();
             //id2 = tableId.row(this).data()[0];
 
-            nombre2 = fila.find('td:eq(0)').text();
-            apellido2 = fila.find('td:eq(1)').text();
-            fecha2 = fila.find('td:eq(2)').text();
+            let nombre2 = fila.find('td:eq(0)').text();
+            let apellido2 = fila.find('td:eq(1)').text();
+            let fecha2 = fila.find('td:eq(2)').text();
 
             $("#nombre2").val(nombre2);
             $("#apellido2").val(apellido2);
