@@ -26,40 +26,12 @@
     </header>
 
   <div class="container">
-      <!--* Agregar Usuarios start -->
-      <h1 class="fw-bold mt-3">Agregar Usuarios!</h1>
-      <label for="">Nombre</label>
-      <input type="text" id="nombre" placeholder="nombre" class="form-control mb-3">
-      <label for="">Apellido</label>
-      <input type="text" id="apellido" placeholder="apellido" class="form-control mb-3">
-      <label for="">Fecha</label>
-      <input type="text" id="fecha" placeholder="fecha" class="form-control mb-3">
-      <button class="btn btn-primary" id="boton" onclick="guardar()">Guardar</button>
-      <!--* Agregar Usuarios end -->
-
-      <!--* Bootstrap 5 - Table start -->
-      <table class="table my-3">
-        <thead>
-          <tr>
-            <th scope="col">Nº</th>
-            <th scope="col">Nombre</th>
-            <th scope="col">Apellido</th>
-            <th scope="col">Año Nac.</th>
-            <th scope="col">Eliminar</th>
-            <th scope="col">Editar</th>
-          </tr>
-        </thead>
-        <tbody id="tabla">
-          <!-- Aqui!! La tabla se llenara con valores provenientes del Firebase -->
-        </tbody>
-      </table>
-      <!--* Bootstrap 5 - Table end -->
 
       <!--? *********MODAL DATATABLE - start *********** -->
 
       <div class="container">
         <div class="row">
-            <div class="col-lg-8">
+            <div class="col-lg">
                 <button id="btnNuevo" class="btn btn-primary" data-toggle="tooltip" title="Nuevo Producto">NUEVO <svg class="bi bi-plus-circle-fill" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.5 4a.5.5 0 0 0-1 0v3.5H4a.5.5 0 0 0 0 1h3.5V12a.5.5 0 0 0 1 0V8.5H12a.5.5 0 0 0 0-1H8.5V4z"/></svg></button>
 
                 <!-- TODO: Modal start -->
@@ -112,7 +84,7 @@
                           <th>Acciones</th>
                       </tr>
                   </thead>
-                  <tbody>
+                  <tbody class="text-center">
                     <!-- Aqui!! La tabla se llenara con valores provenientes del Firebase -->
                   </tbody>
                 </table>
