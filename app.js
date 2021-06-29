@@ -134,7 +134,7 @@ db.collection("users").onSnapshot((querySnapshot) => {
 
             pageLength : 5,
             lengthMenu: [[5, 10, 20, -1], [5, 10, 20, 'Todos']],
-            data: dataSet,
+            data: dataSet, //dataSet contiene los DATOS para llenar la Tabla
             
             columnDefs: [
                 {
@@ -148,8 +148,14 @@ db.collection("users").onSnapshot((querySnapshot) => {
                     defaultContent: "<div class='wrapper text-center'><div class='btn-group'><button class='btnEditar btn btn-primary' data-toggle='tooltip' title='Editar'>"+iconoEditar+"</button><button class='btnBorrar btn btn-danger' data-toggle='tooltip' title='Borrar'>"+iconoBorrar+"</button></div></div>"
                 }
             ]
-
+            
         });
+
+        $("#btnNuevo").click(function(){
+            //alert("nuevo");
+            $("#modalCRUD").modal("show");
+        });
+
     } );
 
     //?Llenado de la DataTable con datos - start
