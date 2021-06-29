@@ -173,35 +173,51 @@ db.collection("users").onSnapshot((querySnapshot) => {
         $("#formMenu").submit(function(e){
             e.preventDefault();
 
-            var nombre2 = document.getElementById('nombre2').value;
-            var apellido2 = document.getElementById('apellido2').value;
-            var fecha2 = document.getElementById('fecha2').value;
+            switch (opcion) {
+                case 1: var nombre2 = document.getElementById('nombre2').value;
+                        var apellido2 = document.getElementById('apellido2').value;
+                        var fecha2 = document.getElementById('fecha2').value;
+            
+                        //Agregamos IF-ELSE. IF para que ejecute el codigo si todos los Input text estan llenos. ELSE para mostrar mensaje 
+                        if ((nombre2 !== "") && (apellido2 !== "") && (fecha2 !== "")) {
+                            db.collection("users").add({
+                                first: nombre2, //var nombre = document...
+                                last: apellido2, //var apellido = document...
+                                born: fecha2 //var fecha = document...
+                            });
+                        }
+                        document.getElementById('nombre2').value = '';
+                        document.getElementById('apellido2').value = '';
+                        document.getElementById('fecha2').value = '';
+                        $("#modalCRUD").modal("hide"); //esconde el MODAL
+                        //Mensaje de EXITO por el llenado de los datos - start
+                        Swal.fire({
+                            position: 'top',
+                            icon: 'success',
+                            title: 'Se ha grabado con EXITO',
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+                        //Mensaje de EXITO por el llenado de los datos - end
+                        //return;
+                        break;
+                
+                case 2: alert("btnEditar");
+                        break;
 
-            //Agregamos IF-ELSE. IF para que ejecute el codigo si todos los Input text estan llenos. ELSE para mostrar mensaje 
-            if ((nombre2 !== "") && (apellido2 !== "") && (fecha2 !== "")) {
-                db.collection("users").add({
-                    first: nombre2, //var nombre = document...
-                    last: apellido2, //var apellido = document...
-                    born: fecha2 //var fecha = document...
-                });
+                case 3: alert("btnBorrar");
+                        break;
+            
+                default:
+                    break;
             }
-            document.getElementById('nombre2').value = '';
-            document.getElementById('apellido2').value = '';
-            document.getElementById('fecha2').value = '';
-            $("#modalCRUD").modal("hide"); //esconde el MODAL
-            //Mensaje de EXITO por el llenado de los datos - start
-            Swal.fire({
-                position: 'top',
-                icon: 'success',
-                title: 'Se ha grabado con EXITO',
-                showConfirmButton: false,
-                timer: 1500
-              });
-            //Mensaje de EXITO por el llenado de los datos - end
-            return;
+
+            
         });
         //*formMenu - DataTable - end
+
         //? ***************************
+
         //*btnCancel y btnX - start
         $("#btnCancel").click(function(){
             document.getElementById('nombre2').value = '';
@@ -217,7 +233,9 @@ db.collection("users").onSnapshot((querySnapshot) => {
             $("#modalCRUD").modal("hide"); //esconde el MODAL
         });
         //*btnCancel y btnX - end
+
         //? ***************************
+
         //*btnEditar - start
         $(document).on("click",".btnEditar", function(){
             fila = $(this).closest("tr");
@@ -238,13 +256,31 @@ db.collection("users").onSnapshot((querySnapshot) => {
         });
 
         //*btnEditar - end
+
         //? ***************************
-        //*btnEliminar - start
-        $(document).on("click",".btnEditar", function(){
+
+        //*btnBorrar - start
+        $(document).on("click",".btnBorrar", function(){
+            fila = $(this).closest("tr");
+            //ID = fila.find('td:eq(0)').text();
+            //id2 = tableId.row(this).data()[0];
+
+            nombre2 = fila.find('td:eq(0)').text();
+            apellido2 = fila.find('td:eq(1)').text();
+            fecha2 = fila.find('td:eq(2)').text();
+
+            $("#nombre2").val(nombre2);
+            $("#apellido2").val(apellido2);
+            $("#fecha2").val(fecha2);
+
+            $(".modal-header").css("background-color", "#d9534f");
+            $(".modal-header").css("color","white");
+            $(".modal-title").text("Menu - Borrar");
+            $("#modalCRUD").modal("show"); //muestra el MODAL
             opcion = 3;
         });
 
-        //*btnEliminar - start
+        //*btnBorrar - end
 
 
     } );
