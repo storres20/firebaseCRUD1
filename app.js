@@ -264,9 +264,6 @@ db.collection("users").onSnapshot((querySnapshot) => {
 
                         break;
 
-                case 3: alert("btnBorrar");
-                        break;
-            
                 default:
                     break;
             }
@@ -334,23 +331,56 @@ db.collection("users").onSnapshot((querySnapshot) => {
 
         //*btnBorrar - start
         $(document).on("click",".btnBorrar", function(){
+
+            data2 = []; //array para estos datos (id,nombre,apellido,fecha)
+
+            //*capturo los valores de la fila del DataTable - start
             fila = $(this).closest("tr");
             //ID = fila.find('td:eq(0)').text();
-            //id2 = tableId.row(this).data()[0];
+            var fila2 = tableId.row( fila ).data(); //contiene todos los datos incluido el OCULTO
+            var id2 = fila2[0]; //valor de ID
+            console.log(id2);
 
-            let nombre2 = fila.find('td:eq(0)').text();
-            let apellido2 = fila.find('td:eq(1)').text();
-            let fecha2 = fila.find('td:eq(2)').text();
+            var nombre2 = fila.find('td:eq(0)').text();
+            var apellido2 = fila.find('td:eq(1)').text();
+            var fecha2 = fila.find('td:eq(2)').text();
+            //*capturo los valores de la fila del DataTable - stop
 
-            $("#nombre2").val(nombre2);
-            $("#apellido2").val(apellido2);
-            $("#fecha2").val(fecha2);
+            data2 = [id2,nombre2,apellido2,fecha2];
 
-            $(".modal-header").css("background-color", "#d9534f");
-            $(".modal-header").css("color","white");
-            $(".modal-title").text("Menu - Borrar");
-            $("#modalCRUD").modal("show"); //muestra el MODAL
-            opcion = 3;
+            //?cuadro confirmacion - start
+            Swal.fire({
+                title: 'Esta seguro de ELIMINAR?',
+                text: "!!!!!!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Sì, eliminar',
+                cancelButtonText: 'No, Cancelar'
+              }).then((result) => {
+                if (result.isConfirmed) {
+
+                    //****************************************************
+                    db.collection("users").doc(data2[0]).delete().then(() => {
+                        console.log("Document successfully deleted!");
+                    }).catch((error) => {
+                        console.error("Error removing document: ", error);
+                    });
+                    //****************************************************
+
+                    //Mensaje final con TEMPORIZADOR
+                    Swal.fire({
+                        //position: 'top-end',
+                        icon: 'success',
+                        title: 'Eliminado!',
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                }
+              })
+
+            //?cuadro confirmacion - end
         });
 
         //*btnBorrar - end
