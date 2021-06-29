@@ -148,20 +148,26 @@ db.collection("users").onSnapshot((querySnapshot) => {
                     targets: -1,
                     //defaultContent: "<div class='wrapper text-center'><div class='btn-group'><button class='btnEditar btn btn-primary' data-toggle='tooltip' title='Editar'>"+iconoEditar+"</button><button class='btn btn-danger' data-toggle='tooltip' title='Borrar' onclick='btnBorrar()'>"+iconoBorrar+"</button></div></div>"
 
-                    defaultContent: "<div class='wrapper text-center'><div class='btn-group'><button class='btnEditar btn btn-primary' data-toggle='tooltip' title='Editar'>"+iconoEditar+"</button><button class='btnBorrar btn btn-danger' data-toggle='tooltip' title='Borrar'>"+iconoBorrar+"</button></div></div>"
+                    defaultContent: "<div class='wrapper text-center'><div class='btn-group'><button class='btnEditar btn btn-warning' data-toggle='tooltip' title='Editar'>"+iconoEditar+"</button><button class='btnBorrar btn btn-danger' data-toggle='tooltip' title='Borrar'>"+iconoBorrar+"</button></div></div>"
                 }
             ]
         });
+
+        let opcion;
 
         //*btnNuevo - DataTable - start
         //activa la ventana MODAL para ingresar NUEVOS DATOS
         $("#btnNuevo").click(function(){
             //$("#formMenu").trigger("reset"); //resetea los campos del formulario
             //alert("nuevo");
+            $(".modal-header").css("background-color", "#0275d8");
+            $(".modal-header").css("color","white");
+            $(".modal-title").text("Menu - Nuevo");
             $("#modalCRUD").modal("show"); //activa el MODAL
+            opcion = 1; //Nuevo
         });
         //*btnNuevo - DataTable - end
-
+        //? ***************************
         //*formMenu - DataTable - start
         //Los valores de los INPUT TEXT los grabo en variables para enviarles al Firebase
         $("#formMenu").submit(function(e){
@@ -183,7 +189,7 @@ db.collection("users").onSnapshot((querySnapshot) => {
             document.getElementById('apellido2').value = '';
             document.getElementById('fecha2').value = '';
             $("#modalCRUD").modal("hide"); //esconde el MODAL
-            //Mensaje de EXITO por el llenado de los datos
+            //Mensaje de EXITO por el llenado de los datos - start
             Swal.fire({
                 position: 'top',
                 icon: 'success',
@@ -191,10 +197,11 @@ db.collection("users").onSnapshot((querySnapshot) => {
                 showConfirmButton: false,
                 timer: 1500
               });
+            //Mensaje de EXITO por el llenado de los datos - end
             return;
         });
         //*formMenu - DataTable - end
-
+        //? ***************************
         //*btnCancel y btnX - start
         $("#btnCancel").click(function(){
             document.getElementById('nombre2').value = '';
@@ -210,7 +217,34 @@ db.collection("users").onSnapshot((querySnapshot) => {
             $("#modalCRUD").modal("hide"); //esconde el MODAL
         });
         //*btnCancel y btnX - end
+        //? ***************************
+        //*btnEditar - start
+        $(document).on("click",".btnEditar", function(){
+            fila = $(this).closest("tr");
+            //ID = fila.find('td:eq(0)').text();
+            nombre2 = fila.find('td:eq(0)').text();
+            apellido2 = fila.find('td:eq(1)').text();
+            fecha2 = fila.find('td:eq(2)').text();
 
+            $("#nombre2").val(nombre2);
+            $("#apellido2").val(apellido2);
+            $("#fecha2").val(fecha2);
+
+            $(".modal-header").css("background-color", "#f0ad4e");
+            $(".modal-header").css("color","white");
+            $(".modal-title").text("Menu - Editar");
+            $("#modalCRUD").modal("show"); //muestra el MODAL
+            opcion = 2; //Editar
+        });
+
+        //*btnEditar - end
+        //? ***************************
+        //*btnEliminar - start
+        $(document).on("click",".btnEditar", function(){
+            opcion = 3;
+        });
+
+        //*btnEliminar - start
 
 
     } );
@@ -270,37 +304,7 @@ function eliminar(id){
 
     //?Borrar Datos con DataTable - start
 
-    //function btnBorrar(){
-
-    //$('#table_id tbody').on('click', 'tr', function() {
-    /*$('#table_id tbody').on('click', '.btnBorrar', function() {
-        filaEliminada = $(this);
-        Swal.fire({
-        title: '¿Está seguro de eliminar el producto?',
-        text: "¡Está operación no se puede revertir!",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#d33',
-        cancelButtonColor: '#3085d6',
-        confirmButtonText: 'Borrar'
-        }).then((result) => {
-        if (result.value) {
-            //let fila = $('#tabla_id').DataTable().fnGetData($(this).closest('tr'));
-            let fila = $('#table_id').DataTable().row( this ).data();
-            let idt = fila[0];
-
-            console.log(idt);
-            //db.ref(`productos/${id}`).remove()
-            Swal.fire('¡Eliminado!', 'El producto ha sido eliminado.','success')
-        }
-        })
-	}); */
-    //};
-
     //?Borrar Datos con DataTable - end
-
-
-
 
 //*Borrar Datos, en la Tabla y en DB Firebase - end
 
