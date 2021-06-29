@@ -69,28 +69,28 @@
                         <div class="modal-content">
                             <div class="modal-header bg-primary text-light">
                                 <h5 class="modal-title" id="exampleModalLabel">Menu - Nuevo</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close" id="btnX"><span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
 
-                            <form>
+                            <form id="formMenu">
                                 <div class="modal-body">
                                     <input id="id" type="hidden"> <!-- ID que vamos a recibir de firebase -->
                                     <div class="form-group">
                                     <label>Nombre</label>
-                                    <input id="codigo" type="text" class="form-control" required>
+                                    <input id="nombre2" type="text" class="form-control" required>
                                     </div>
                                     <div class="form-group">
                                     <label>Apellido</label>
-                                    <input id="descripcion" type="text" class="form-control" required>
+                                    <input id="apellido2" type="text" class="form-control" required>
                                     </div>
                                     <div class="form-group">
                                     <label>Año Nac.</label>
-                                    <input id="cantidad" type="number" class="form-control" required>
+                                    <input id="fecha2" type="number" class="form-control" required>
                                     </div>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal" tabindex="2">Cancelar</button>
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal" tabindex="2" id="btnCancel">Cancelar</button>
                                     <button type="submit" value="btnGuardar" class="btn btn-primary" translate="1">Guardar</button>
                                 </div>
                             </form>
@@ -100,7 +100,7 @@
                 </div>
 
                 <!-- TODO: Modal stop -->
-                
+
                 <!--* DataTable Bootstrap 5 - Table start -->
                 <table id="table_id" class="table table-striped table-bordered" style="width:100%">
                   <thead class="text-center">
