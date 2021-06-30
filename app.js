@@ -205,6 +205,12 @@ db.collection("users").onSnapshot((querySnapshot) => {
                         var apellido3 = document.getElementById('apellido2').value;
                         var fecha3 = document.getElementById('fecha2').value;
 
+                        //fecha3 = 2021-01-01 ... se debe hacer una conversion previa para mostrar 01/01/2021
+                        dArr = [];
+                        dArr = fecha3.split("-"); // input 2021-01-01
+                        fecha3 = dArr[2]+ "/" +dArr[1]+ "/" +dArr[0]; // output 01/01/2021
+                        //fecha3 = 2021-01-01 ... se debe hacer una conversion previa para mostrar 01/01/2021
+
                         data3 = [nombre3,apellido3,fecha3];
 
                         if ((data2[1]==nombre3)&&(data2[2]==apellido3)&&(data2[3]==fecha3)) {
