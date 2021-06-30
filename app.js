@@ -166,6 +166,12 @@ db.collection("users").onSnapshot((querySnapshot) => {
                         var apellido2 = document.getElementById('apellido2').value;
                         var fecha2 = document.getElementById('fecha2').value;
 
+                        //fecha2 = 2021-01-01 ... se debe hacer una conversion previa para mostrar 01/01/2021
+                        dArr = [];
+                        dArr = fecha2.split("-"); // input 2021-01-01
+                        fecha2 = dArr[2]+ "/" +dArr[1]+ "/" +dArr[0]; // output 01/01/2021
+                        //fecha2 = 2021-01-01 ... se debe hacer una conversion previa para mostrar 01/01/2021
+
                         //Agregamos IF-ELSE. IF para que ejecute el codigo si todos los Input text estan llenos. ELSE para mostrar mensaje
                         if ((nombre2 !== "") && (apellido2 !== "") && (fecha2 !== "")) {
                             db.collection("users").add({
@@ -295,6 +301,12 @@ db.collection("users").onSnapshot((querySnapshot) => {
             var fecha2 = fila.find('td:eq(2)').text();
             //*capturo los valores de la fila del DataTable - stop
 
+            //reconversion de fecha... de 01/01/2021 a 2021-01-01
+            dArr = [];
+            dArr = fecha2.split("/"); // input 2021-01-01
+            fecha2 = dArr[2]+ "-" +dArr[1]+ "-" +dArr[0]; // output 01/01/2021
+            //reconversion de fecha... de 01/01/2021 a 2021-01-01
+
             data2 = [id2,nombre2,apellido2,fecha2];
 
             //*Muestro los valores capturados en el formulario Modal - start
@@ -325,14 +337,10 @@ db.collection("users").onSnapshot((querySnapshot) => {
             //ID = fila.find('td:eq(0)').text();
             var fila2 = tableId.row( fila ).data(); //contiene todos los datos incluido el OCULTO
             var id2 = fila2[0]; //valor de ID
-            console.log(id2);
 
-            var nombre2 = fila.find('td:eq(0)').text();
-            var apellido2 = fila.find('td:eq(1)').text();
-            var fecha2 = fila.find('td:eq(2)').text();
             //*capturo los valores de la fila del DataTable - stop
 
-            data2 = [id2,nombre2,apellido2,fecha2];
+            data2 = [id2];
 
             //?cuadro confirmacion - start
             Swal.fire({
