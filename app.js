@@ -150,6 +150,13 @@ db.collection("users").onSnapshot((querySnapshot) => {
             $(".modal-header").css("color","white");
             $(".modal-title").text("Menu - Nuevo");
             $("#modalCRUD").modal("show"); //activa el MODAL
+
+            //limpiar los input text
+            document.getElementById('nombre2').value = '';
+            document.getElementById('apellido2').value = '';
+            document.getElementById('fecha2').value = '';
+            //limpiar los input text
+
             opcion = 1; //Nuevo
         });
         //*btnNuevo - DataTable - end
