@@ -34,7 +34,7 @@ db.collection("users").onSnapshot((querySnapshot)...
 
 
 
-db.collection("users").onSnapshot((querySnapshot) => {
+let subscribe = db.collection("user").onSnapshot((querySnapshot) => {
 
     dataSet = [];
 
@@ -131,7 +131,7 @@ db.collection("users").onSnapshot((querySnapshot) => {
 
                         //Agregamos IF-ELSE. IF para que ejecute el codigo si todos los Input text estan llenos. ELSE para mostrar mensaje
                         if ((nombre2 !== "") && (apellido2 !== "") && (fecha2 !== "")) {
-                            db.collection("users").add({
+                            db.collection("user").add({
                                 first: nombre2, //var nombre = document...
                                 last: apellido2, //var apellido = document...
                                 born: fecha2 //var fecha = document...
@@ -191,7 +191,7 @@ db.collection("users").onSnapshot((querySnapshot) => {
 
                         if ((nombre3 !== "")&&(apellido3 !== "")&&(fecha3 !== "")) {
 
-                            var washingtonRef = db.collection("users").doc(data2[0]);
+                            var washingtonRef = db.collection("user").doc(data2[0]);
 
                             //Estas 03 lineas de codigo limpian los valores de los INPUT TEXTS luego de presionar el boton GUARDAR
                                 document.getElementById('nombre2').value = '';
@@ -356,6 +356,8 @@ db.collection("users").onSnapshot((querySnapshot) => {
             })
             //Mensaje - stop
 
+            //unsubscribe();
+
             for (let i = 1; i <= 20; i++) {
 
             //Random de Fecha - start
@@ -391,14 +393,19 @@ db.collection("users").onSnapshot((querySnapshot) => {
             //alert(apellido4);
             //Random de Nombre y Apellido - stop
 
+            
 
-            db.collection("users").add({
+            db.collection("user").add({
                 first: nombre4, //var nombre = document...
                 last: apellido4, //var apellido = document...
                 born: fecha4 //var fecha = document...
             });
-
+            
             }
+
+            //subscribe();
+
+            
 
         });
 
@@ -412,4 +419,23 @@ db.collection("users").onSnapshot((querySnapshot) => {
 
 //?2*****************************************
 
+//*Unsubscribe onSnapShot - start
 
+/*let unsubscribe;
+
+getRealtimeUpdates = function(document) {
+		unsubscribe = firestore.collection("user")
+			.onSnapshot(function(querySnapshot) {
+			querySnapshot.forEach(function(doc) {
+				if (doc && doc.exists) {
+					const myData = doc.data();
+					// DO SOMETHING
+				}
+			});
+		});
+	}
+  
+  // unsubscribe: */
+
+
+//*Unsubscribe onSnapShot - stop
