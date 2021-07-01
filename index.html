@@ -93,7 +93,7 @@
                           <th>Acciones</th>
                       </tr>
                   </thead>
-                  <tbody class="text-center">
+                  <tbody class="text-center align-middle">
                     <!-- Aqui!! La tabla se llenara con valores provenientes del Firebase -->
                   </tbody>
                 </table>
@@ -130,12 +130,16 @@
         apiKey: "AIzaSyD7i_kskcbM6IoI-xqUfaiIF6J0K5M2otM",
         authDomain: "fbcrud-bluu.firebaseapp.com",
         projectId: "fbcrud-bluu",
-        storageBucket: "fbcrud-bluu.appspot.com",
+        storageBucket: "gs://fbcrud-bluu.appspot.com",
         messagingSenderId: "240178751873",
         appId: "1:240178751873:web:97ef1976854274dc972080"
       };
       // Initialize Firebase
       firebase.initializeApp(firebaseConfig);
+
+      //Initialize Storage
+      var storage = firebase.storage();
+
     </script>
     <!--* SDK Firebase end-->
 

@@ -34,7 +34,7 @@ db.collection("users").onSnapshot((querySnapshot)...
 
 
 
-let subscribe = db.collection("user").onSnapshot((querySnapshot) => {
+db.collection("user").onSnapshot((querySnapshot) => {
 
     dataSet = [];
 
@@ -318,7 +318,7 @@ let subscribe = db.collection("user").onSnapshot((querySnapshot) => {
                 if (result.isConfirmed) {
 
                     //****************************************************
-                    db.collection("users").doc(data2[0]).delete().then(() => {
+                    db.collection("user").doc(data2[0]).delete().then(() => {
                         console.log("Document successfully deleted!");
                     }).catch((error) => {
                         console.error("Error removing document: ", error);
