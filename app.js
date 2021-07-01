@@ -21,56 +21,6 @@ const iconoBorrar = '<svg class="bi bi-trash" width="1em" height="1em" viewBox="
 
 //?2*****************************************
 
-//*Agregar el Usuario, cada vez que se da CLICK al boton GUARDAR - start
-function guardar(){
-    //Capturamos el valor de los elementos que tienen ID nombre, apellido y fecha; en otras palabras, capturamos los valores de los INPUT TEXT y lo asignamos a las variables nombre, apellido, fecha
-    var nombre = document.getElementById('nombre').value;
-    var apellido = document.getElementById('apellido').value;
-    var fecha = document.getElementById('fecha').value;
-
-    //Agregamos IF-ELSE. IF para que ejecute el codigo si todos los Input text estan llenos. ELSE para mostrar mensaje 
-    if ((nombre !== "") && (apellido !== "") && (fecha !== "")) {
-
-        db.collection("users").add({
-            first: nombre, //var nombre = document...
-            last: apellido, //var apellido = document...
-            born: fecha //var fecha = document...
-        })
-        .then((docRef) => {
-            console.log("Document written with ID: ", docRef.id);
-            //Estas 03 lineas de codigo limpian los valores de los INPUT TEXTS luego de presionar el boton GUARDAR
-            document.getElementById('nombre').value = '';
-            document.getElementById('apellido').value = '';
-            document.getElementById('fecha').value = '';
-
-            //Mensaje de EXITO por el llenado de los datos
-            Swal.fire({
-                position: 'top',
-                icon: 'success',
-                title: 'Se ha grabado con EXITO',
-                showConfirmButton: false,
-                timer: 1500
-              })
-        })
-        .catch((error) => {
-            console.error("Error adding document: ", error);
-        });
-
-    } else {
-        //Mensaje ERROR en caso existan Datos incompletos
-        Swal.fire({
-            position: 'top',
-            icon: 'info',
-            title: 'Falta llenar DATOS',
-            showConfirmButton: false,
-            timer: 1500
-          })
-    }
-}
-//*Agregar el Usuario, cada vez que se da CLICK al boton GUARDAR - end
-
-//?2*****************************************
-
 //*Leer Datos, desde DB Firebase - start
 //Nota: "tabla" es el ID de <tbody></tbody> en la tabla de Bootstrap del index.html. Se apunta a esta tabla con JS para llenarlo con los valores del Firebase
 var tabla = document.getElementById('tabla');
@@ -273,7 +223,6 @@ db.collection("users").onSnapshot((querySnapshot) => {
                     break;
             }
 
-            
         });
         //*formMenu - DataTable - end
 
@@ -392,6 +341,69 @@ db.collection("users").onSnapshot((querySnapshot) => {
 
         //*btnBorrar - end
 
+        //? ********************
+
+        //*btn agregar grupo de DATOS a Firebase - start
+        $("#btnAdd").click(function(){
+
+            //Mensaje - start
+            Swal.fire({
+                //position: 'top-end',
+                icon: 'success',
+                title: 'Agregado #20 datos!',
+                showConfirmButton: false,
+                timer: 1500
+            })
+            //Mensaje - stop
+
+            for (let i = 1; i <= 20; i++) {
+
+            //Random de Fecha - start
+            fechaArr = [];
+            fechaArr[0] = Math.floor(Math.random() * 30) + 1; // 1->30 dia
+
+            if (fechaArr[0]/10<1) {
+                fechaArr[0] = "0"+fechaArr[0];
+            }
+
+            fechaArr[1] = Math.floor(Math.random() * 12) + 1; // 1->12 mes
+
+            if (fechaArr[1]/10<1) {
+                fechaArr[1] = "0"+fechaArr[1];
+            }
+
+            fechaArr[2] = Math.floor(Math.random() * 50) + 1970; // 1->2000 año
+
+            var fecha4 = fechaArr[0] + "/" +fechaArr[1] + "/" + fechaArr[2]; // output 01/01/2021
+
+            //alert(fecha4);
+            //Random de Fecha - stop
+
+            //Random de Nombre y Apellido - start
+            var nombre4 = generateName();
+            nameArr = [];
+            nameArr = nombre4.split(" ");
+
+            nombre4 = nameArr[0];
+            apellido4 = nameArr[1];
+
+            //alert(nombre4);
+            //alert(apellido4);
+            //Random de Nombre y Apellido - stop
+
+
+            db.collection("users").add({
+                first: nombre4, //var nombre = document...
+                last: apellido4, //var apellido = document...
+                born: fecha4 //var fecha = document...
+            });
+
+            }
+
+        });
+
+
+        //*btn agregar grupo de DATOS a Firebase - stop
 
     } );
     //?Llenado de la DataTable con datos - start
@@ -399,4 +411,5 @@ db.collection("users").onSnapshot((querySnapshot) => {
 //*Leer Datos, desde DB Firebase - end
 
 //?2*****************************************
+
 
