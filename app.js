@@ -408,9 +408,36 @@ db.collection("user").onSnapshot((querySnapshot) => {
             
 
         });
-
-
         //*btn agregar grupo de DATOS a Firebase - stop
+
+        //* id=photo para cambiar de IMAGEN - start
+        /*
+        $("#photo").click(function(){
+
+            var image = document.getElementById('photo');
+            //image = image.src;
+
+            //alert(image);
+            //var namePhoto = document.getElementById('files').value;
+            var namePhoto = document.getElementById('files').files[0].name;
+            //alert(namePhoto);
+            //alert(files.value);
+
+            //mostrar IMAGEN seleccionado en el MODAL
+
+            image.src = namePhoto;
+        }); */
+
+        $("input[type=file]").on('change',function(){
+            //alert(this.files[0].name);
+            var namePhoto = this.files[0].name;
+
+            var image = document.getElementById('photo');
+
+            image.src = namePhoto;
+        });
+
+        //* id=photo para cambiar de IMAGEN - stop
 
     } );
     //?Llenado de la DataTable con datos - start

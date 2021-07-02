@@ -21,6 +21,10 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
     <!--* Bootstrap 5 Icon stop -->
 
+    <!--* Picture CSS - start -->
+    <link rel="stylesheet" href="picture.css">
+    <!--* Picture CSS - stop -->
+
     <title>Hello, world!</title>
   </head>
   <body>
@@ -54,7 +58,7 @@
                                 </button>
                             </div>
 
-                            <form id="formMenu">
+                            <form id="formMenu" enctype="multipart/form-data">
                                 <div class="modal-body">
                                     <input id="id2" type="hidden"> <!-- ID que vamos a recibir de firebase -->
                                     <div class="form-group">
@@ -69,6 +73,17 @@
                                     <label>Año Nac.</label>
                                     <input id="fecha2" type="date" name="trip-start" class="form-control" required>
                                     </div>
+                                    <!--Agregar y mostrar Foto - start-->
+                                    <div class="form-group">
+                                    <label>Foto</label>
+                                    </div>
+                                    <input type="file" id="files" name="files[]" accept="image/*"/>
+                                    <!--Agregar y mostrar Foto - stop-->
+
+                                    <img src="photo260.jpg" width="100" height="100" id="photo" alt="" class="rounded-circle">
+
+                                    <!--<output id="list"></output>-->
+
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal" tabindex="2" id="btnCancel">Cancelar</button>
@@ -163,6 +178,10 @@
     <!--* DataTable Bootstrap 5 Javascript start -->
     <script src="https://cdn.datatables.net/1.10.25/js/dataTables.bootstrap5.min.js"></script>
     <!--* DataTable Bootstrap 5 Javascript end -->
+
+    <!--* Picture Javascript - start -->
+    <!--<script src="picture.js"></script>-->
+    <!--* Picture Javascript - stop -->
 
     <!--* Javascript file start -->
     <script src="name.js"></script>
