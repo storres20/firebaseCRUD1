@@ -108,6 +108,11 @@ db.collection("user").onSnapshot((querySnapshot) => {
             //limpiar los input text
 
             opcion = 1; //Nuevo
+
+            var image = document.getElementById('photo');
+            image.src = "photo260.jpg";
+
+            document.getElementById("files").value = "";
         });
         //*btnNuevo - DataTable - end
 
@@ -410,21 +415,19 @@ db.collection("user").onSnapshot((querySnapshot) => {
         });
         //*btn agregar grupo de DATOS a Firebase - stop
 
+        //? ********************
+
         //* id=photo para cambiar de IMAGEN - start
         /*
         $("#photo").click(function(){
-
             var image = document.getElementById('photo');
             //image = image.src;
-
             //alert(image);
             //var namePhoto = document.getElementById('files').value;
             var namePhoto = document.getElementById('files').files[0].name;
             //alert(namePhoto);
             //alert(files.value);
-
             //mostrar IMAGEN seleccionado en el MODAL
-
             image.src = namePhoto;
         }); */
 
@@ -446,23 +449,4 @@ db.collection("user").onSnapshot((querySnapshot) => {
 
 //?2*****************************************
 
-//*Unsubscribe onSnapShot - start
 
-/*let unsubscribe;
-
-getRealtimeUpdates = function(document) {
-		unsubscribe = firestore.collection("user")
-			.onSnapshot(function(querySnapshot) {
-			querySnapshot.forEach(function(doc) {
-				if (doc && doc.exists) {
-					const myData = doc.data();
-					// DO SOMETHING
-				}
-			});
-		});
-	}
-  
-  // unsubscribe: */
-
-
-//*Unsubscribe onSnapShot - stop
