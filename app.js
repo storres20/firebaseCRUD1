@@ -109,10 +109,12 @@ db.collection("user").onSnapshot((querySnapshot) => {
 
             opcion = 1; //Nuevo
 
+            //Resetea IMAGEN y INPUT FILES - start
             var image = document.getElementById('photo');
             image.src = "photo260.jpg";
 
             document.getElementById("files").value = "";
+            //Resetea IMAGEN y INPUT FILES - stop
         });
         //*btnNuevo - DataTable - end
 
@@ -140,6 +142,13 @@ db.collection("user").onSnapshot((querySnapshot) => {
                                 first: nombre2, //var nombre = document...
                                 last: apellido2, //var apellido = document...
                                 born: fecha2 //var fecha = document...
+                            })
+                            .then(() => {
+                                console.log("Document successfully written!");
+                                uploadProfileImg();
+                            })
+                            .catch((error) => {
+                                console.error("Error writing document: ", error);
                             });
                         }
 
@@ -159,6 +168,7 @@ db.collection("user").onSnapshot((querySnapshot) => {
                         });
                         //Mensaje de EXITO por el llenado de los datos - end
                         //return;
+
                         break;
 
                 case 2:
@@ -346,7 +356,7 @@ db.collection("user").onSnapshot((querySnapshot) => {
 
         //*btnBorrar - end
 
-        //? ********************
+        //? ***************************
 
         //*btn agregar grupo de DATOS a Firebase - start
         $("#btnAdd").click(function(){
@@ -430,17 +440,47 @@ db.collection("user").onSnapshot((querySnapshot) => {
             //mostrar IMAGEN seleccionado en el MODAL
             image.src = namePhoto;
         }); */
-
+        //*Cuando el INPUT FILE carga una IMAGEN, esta funcion se activa y muestra la imagen en pantalla
         $("input[type=file]").on('change',function(){
             //alert(this.files[0].name);
-            var namePhoto = this.files[0].name;
+            var namePhoto = this.files[0].name; //se almacena el NAME de FILES
 
             var image = document.getElementById('photo');
 
-            image.src = namePhoto;
+            image.src = namePhoto; //cambia el SRC de image por el nombre de la foto cargada
         });
-
         //* id=photo para cambiar de IMAGEN - stop
+
+        //? ***************************
+
+        //* funcion que envia la imagen al Firebase Storage - start
+
+        uploadProfileImg = function(){
+            var file = document.getElementById('files').files[0];
+            console.log(file);
+
+            if (!file) {
+
+            } else {
+                var storageRef = storage.ref('/userProfileImgs/'+file.name); // crea la carpeta en Firebase y le asigna el nombre de la imagen
+
+                var uploadTask = storageRef.put(file); // envia la imagen a Firebase
+
+                uploadTask.on('state_changed', function(snapshot){ //genera el mensaje al detectar el uso de "uploadTask"
+
+                }, function(error){
+                    console.log(error);
+                }, function(){
+                    console.log('Archivo o imagen subida a Firebase');
+                });
+            }
+            
+
+
+
+        };
+
+        //* funcion que envia la imagen al Firebase Storage - start
 
     } );
     //?Llenado de la DataTable con datos - start

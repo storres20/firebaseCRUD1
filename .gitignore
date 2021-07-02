@@ -3,3 +3,4 @@ NOTAS.txt
 **/.firebaserc
 firebase.json
 .firebaserc
+node_modules

@@ -78,13 +78,10 @@
                                     <label for="files">Foto:</label>
                                     <input type="file" id="files" name="files[]" accept="image/*"/>
                                     </div>
-                                    
                                     <!--Agregar y mostrar Foto - stop-->
                                     <div class="form-group mt-3 text-center">
                                     <img src="photo260.jpg" width="100" height="100" id="photo" alt="" class="rounded-circle border border-dark">
                                   </div>
-                                    <!--<output id="list"></output>-->
-
                                 </div>
                                 <div class="modal-footer">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal" tabindex="2" id="btnCancel">Cancelar</button>
@@ -127,8 +124,6 @@
 
 <!--TODO: SCRIPT SECTION start -->
 
-    
-
     <!--* SDK Firebase start -->
         <!-- The core Firebase JS SDK is always required and must be listed first -->
     <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
@@ -136,11 +131,16 @@
     <!-- TODO: Add SDKs for Firebase products that you want to use
         https://firebase.google.com/docs/web/setup#available-libraries -->
 
+        <!--* Cloud Storage start -->
+        <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-storage.js"></script>
+        <!--* Cloud Storage stop -->
+
         <!--* Cloud Firestore start -->
         <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-firestore.js"></script>
         <!--* Cloud Firestore end -->
 
     <script>
+
       // Your web app's Firebase configuration
       var firebaseConfig = {
         apiKey: "AIzaSyD7i_kskcbM6IoI-xqUfaiIF6J0K5M2otM",
