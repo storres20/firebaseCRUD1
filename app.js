@@ -10,6 +10,8 @@ var filaEliminada; //!para capturara la fila eliminada
 var filaEditada; //!para capturara la fila editada o actualizada
 
 var dataSet = new Array();
+let picArr = new Array();
+let nameArr = new Array();
 
 //* creamos constantes para los iconos editar y borrar - start
 const iconoEditar = '<svg class="bi bi-pencil-square" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg"><path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456l-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z"/><path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z"/></svg>';
@@ -44,8 +46,30 @@ db.collection("user").onSnapshot((querySnapshot) => {
         //?El codigo de arriba carga los datos provenientes del Firestore. El codigo de abajo guardar los datos en "dataSet"
 
         dataSet.push([
-            doc.id, doc.data().first, doc.data().last, doc.data().born
+            doc.id, doc.data().first, doc.data().last, doc.data().born, doc.data().pic
         ]);
+
+        //"<img src='' width='100' height='100' id='dataPic' alt='' class='rounded-circle border border-dark'>"
+
+       /* dArr = []; //input 01/01/2001
+        dArr = doc.data().born.split("/"); // input 2021-01-01
+        fecha3 = dArr[2]+ "-" +dArr[1]+ "-" +dArr[0]; // output 2021-01-01
+
+        //descargo URL de STORAGE y lo asigno al IMG SRC
+
+        let storageRef = storage.ref('/userProfileImgs/'+doc.data().first+doc.data().last+fecha3+'/'+doc.data().pic);
+
+            storageRef.getDownloadURL().then(function(url){
+                
+                //picArr.push(url);
+                //console.log(url);
+                dataSet.push([
+                    doc.id, doc.data().first, doc.data().last, doc.data().born,url
+                ]);
+
+            }).catch(function(error){
+                console.log(error);
+            }); */
 
         //? end
 
@@ -79,6 +103,15 @@ db.collection("user").onSnapshot((querySnapshot) => {
                 {
                     targets: [0],
                     visible: false, //ocultamos la columna de ID que es la [0]
+                },
+                {
+                    targets: [5],
+                    defaultContent: "<img src='' width='100' height='100' id='photo' alt='' class='rounded-circle border border-dark'>"
+                    /*data: 'pic',
+                    render: function(data,type,row){
+                        return '<img src="' + 'photo260.jpg' + '" alt="' + data + '"height="100" width="100"/>';
+                    }*/
+                    //defaultContent: "<img src='photo260.jpg' width='100' height='100' id='photo' alt='' class='rounded-circle border border-dark'>"
                 },
                 {
                     targets: -1,
@@ -129,6 +162,11 @@ db.collection("user").onSnapshot((querySnapshot) => {
                 case 1: var nombre2 = document.getElementById('nombre2').value;
                         var apellido2 = document.getElementById('apellido2').value;
                         var fecha2 = document.getElementById('fecha2').value;
+                        let file = document.getElementById('files').files[0];
+
+                        nameArr = [nombre2,apellido2,fecha2];
+
+                        //let pic2;
 
                         //fecha2 = 2021-01-01 ... se debe hacer una conversion previa para mostrar 01/01/2021
                         dArr = [];
@@ -136,16 +174,24 @@ db.collection("user").onSnapshot((querySnapshot) => {
                         fecha2 = dArr[2]+ "/" +dArr[1]+ "/" +dArr[0]; // output 01/01/2021
                         //fecha2 = 2021-01-01 ... se debe hacer una conversion previa para mostrar 01/01/2021
 
+                        if (opcion == 1) {
+                            uploadProfileImg();
+                            //getImgUrl();
+                            opcion = 0;
+                        }
+
+                        //pic2 = picArr[0];
+
                         //Agregamos IF-ELSE. IF para que ejecute el codigo si todos los Input text estan llenos. ELSE para mostrar mensaje
                         if ((nombre2 !== "") && (apellido2 !== "") && (fecha2 !== "")) {
                             db.collection("user").add({
                                 first: nombre2, //var nombre = document...
                                 last: apellido2, //var apellido = document...
-                                born: fecha2 //var fecha = document...
+                                born: fecha2, //var fecha = document...
+                                pic: file.name
                             })
                             .then(() => {
                                 console.log("Document successfully written!");
-                                uploadProfileImg();
                             })
                             .catch((error) => {
                                 console.error("Error writing document: ", error);
@@ -271,7 +317,7 @@ db.collection("user").onSnapshot((querySnapshot) => {
             //ID = fila.find('td:eq(0)').text();
             var fila2 = tableId.row( fila ).data(); //contiene todos los datos incluido el OCULTO
             var id2 = fila2[0]; //valor de ID
-            console.log(id2);
+            console.log("ID a editar: "+id2);
 
             var nombre2 = fila.find('td:eq(0)').text();
             var apellido2 = fila.find('td:eq(1)').text();
@@ -456,29 +502,26 @@ db.collection("user").onSnapshot((querySnapshot) => {
         //* funcion que envia la imagen al Firebase Storage - start
 
         uploadProfileImg = function(){
-            var file = document.getElementById('files').files[0];
-            console.log(file);
+
+            let file = document.getElementById('files').files[0];
 
             if (!file) {
-
+                //pic[0]="https://firebasestorage.googleapis.com/v0/b/fbcrud-bluu.appspot.com/o/photo100.jpg?alt=media&token=046c7740-a7cb-4b01-a9ae-28f808f6fe68"; //default photo
             } else {
-                var storageRef = storage.ref('/userProfileImgs/'+file.name); // crea la carpeta en Firebase y le asigna el nombre de la imagen
+                let storageRef = storage.ref('/userProfileImgs/'+nameArr[0]+nameArr[1]+nameArr[2]+'/'+file.name); // crea la carpeta en Firebase y le asigna el nombre de la imagen
 
-                var uploadTask = storageRef.put(file); // envia la imagen a Firebase
+                let uploadTask = storageRef.put(file); // envia la imagen a Firebase
 
                 uploadTask.on('state_changed', function(snapshot){ //genera el mensaje al detectar el uso de "uploadTask"
-
+                    //console.log(file);
                 }, function(error){
                     console.log(error);
                 }, function(){
                     console.log('Archivo o imagen subida a Firebase');
                 });
             }
-            
-
-
-
         };
+
 
         //* funcion que envia la imagen al Firebase Storage - start
 
