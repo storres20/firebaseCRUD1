@@ -46,12 +46,12 @@ db.collection("user").onSnapshot((querySnapshot) => {
         //?El codigo de arriba carga los datos provenientes del Firestore. El codigo de abajo guardar los datos en "dataSet"
 
         dataSet.push([
-            doc.id, doc.data().first, doc.data().last, doc.data().born, doc.data().pic
+            doc.id, doc.data().first, doc.data().last, doc.data().born, doc.data().pic, "hola"
         ]);
 
         //"<img src='' width='100' height='100' id='dataPic' alt='' class='rounded-circle border border-dark'>"
-
-       /* dArr = []; //input 01/01/2001
+/*
+        dArr = []; //input 01/01/2001
         dArr = doc.data().born.split("/"); // input 2021-01-01
         fecha3 = dArr[2]+ "-" +dArr[1]+ "-" +dArr[0]; // output 2021-01-01
 
@@ -64,12 +64,12 @@ db.collection("user").onSnapshot((querySnapshot) => {
                 //picArr.push(url);
                 //console.log(url);
                 dataSet.push([
-                    doc.id, doc.data().first, doc.data().last, doc.data().born,url
+                    doc.id, doc.data().first, doc.data().last, doc.data().born, doc.data().pic, url
                 ]);
 
             }).catch(function(error){
                 console.log(error);
-            }); */
+            });*/
 
         //? end
 
@@ -105,8 +105,15 @@ db.collection("user").onSnapshot((querySnapshot) => {
                     visible: false, //ocultamos la columna de ID que es la [0]
                 },
                 {
-                    targets: [5],
-                    defaultContent: "<img src='' width='100' height='100' id='photo' alt='' class='rounded-circle border border-dark'>"
+                    "render": function ( data, type, row ) {
+                        //return data +' ('+ row[3]+')';
+                        //return data + " HOLA";
+                        return "<img src='" + data + "' width='100' height='100' id='photo' alt='' class='rounded-circle border border-dark'>";
+                    },
+                    targets: 4
+
+                    /*targets: [5],
+                    defaultContent: "<img src='" + dataSet[4] + "' width='100' height='100' id='photo' alt='' class='rounded-circle border border-dark'>"*/
                     /*data: 'pic',
                     render: function(data,type,row){
                         return '<img src="' + 'photo260.jpg' + '" alt="' + data + '"height="100" width="100"/>';
