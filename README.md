@@ -1,4 +1,4 @@
-# ⚡CRUD con Firebase ⚡
+# ⚡CRUD with Firebase ⚡
 
 > Data table showing list of people. Allows CRUD with database
 
