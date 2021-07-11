@@ -2,7 +2,7 @@
 
 > Data table showing list of people. Allows CRUD with database
 
-## Skills
+## 🔭skils:
 
 | `🔭Frontend` | `⚡Backend` | `📫Database` |
 | ------ | ------ | ------ | 
@@ -11,5 +11,7 @@
 | Boostrap |  |
 | DataTable |  |
 
-## Beta version
-<https://fbcrud-bluu.web.app/>
+## 🌱 Beta version
+<ul>
+<li> <a href="https://fbcrud-bluu.web.app/" target="_blank">https://fbcrud-bluu.web.app/</a> </li>
+</ul>
